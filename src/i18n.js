@@ -1,7 +1,7 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import kkTranslations from '../public/locales/kk/common.json';
-import ruTranslations from '../public/locales/ru/common.json';
+import kkTranslations from './locales/kk/common.json';
+import ruTranslations from './locales/ru/common.json';
 
 i18n
   .use(initReactI18next)

@@ -8,11 +8,14 @@ export default {
     extend: {
       colors: {
         brand: {
-          darkBlue: '#1e3a8a',
-          brightBlue: { DEFAULT: '#1d4ed8', light: '#60a5fa' },
-          text: { primary: 'rgb(17, 24, 39)', secondary: 'rgb(31, 41, 55)', muted: 'rgb(55, 65, 81)' },
-          bg: { light: 'rgb(249, 250, 251)', softBlue: 'rgb(219, 234, 254)' },
-          accent: { orange: 'rgb(245, 158, 11)', green: 'rgb(22, 163, 74)', red: 'rgb(220, 38, 38)' }
+          primary: '#C2282A',
+          primaryHover: '#A61F21',
+          primaryLight: '#E25B5D',
+          darkBlue: '#2A2A72',
+          brightBlue: { DEFAULT: '#264653', light: '#17A2B8' },
+          text: { primary: '#111111', secondary: '#555555', muted: '#999999' },
+          bg: { light: '#F5F5F5', softBlue: '#FAFAFA' },
+          accent: { orange: '#F4A261', green: '#28A745', red: '#DC3545' }
         }
       },
       fontFamily: {

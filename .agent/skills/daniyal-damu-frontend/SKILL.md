@@ -20,16 +20,51 @@ tags: ["react", "tailwind", "framer-motion", "i18next", "daniyal-damu"]
 - **Axios** — для работы с Django API
 
 ### Цветовая палитра (обязательно использовать)
-```js
-colors: {
-  brand: {
-    darkBlue: '#1e3a8a',
-    brightBlue: { DEFAULT: '#1d4ed8', light: '#60a5fa' },
-    text: { primary: 'rgb(17, 24, 39)', secondary: 'rgb(31, 41, 55)', muted: 'rgb(55, 65, 81)' },
-    bg: { light: 'rgb(249, 250, 251)', softBlue: 'rgb(219, 234, 254)' },
-    accent: { orange: 'rgb(245, 158, 11)', green: 'rgb(22, 163, 74)', red: 'rgb(220, 38, 38)' }
-  }
-}
+🎨 Color System Design (UI/UX Skill)
+
+Designed a modern and scalable color system based on a strong primary brand color:
+
+🔴 Primary Colors
+Primary: #C2282A — main brand color used for CTAs, links, and key actions
+Primary Hover: #A61F21 — interaction state
+Primary Light: #E25B5D — subtle accents and highlights
+🧱 Background Colors
+Main Background: #FFFFFF — clean and minimal layout
+Secondary Background: #F5F5F5 — section separation
+Dark Background: #1E1E1E — footer / dark mode support
+✍️ Typography Colors
+Primary Text: #111111 — high readability
+Secondary Text: #555555 — supporting content
+Muted Text: #999999 — captions / less important info
+Text on Primary: #FFFFFF — for buttons and colored blocks
+🔘 Button Styles
+Primary Button:
+Background: #C2282A
+Text: #FFFFFF
+Hover State:
+Background: #A61F21
+Secondary Button:
+Background: transparent
+Border: #C2282A
+Text: #C2282A
+🧩 UI Elements
+Borders: #E0E0E0
+Card Background: #FFFFFF
+Card Hover: #FAFAFA
+⚡ Status Colors
+Success: #28A745
+Warning: #FFC107
+Error: #DC3545
+Info: #17A2B8
+🎯 Accent Colors
+Deep Blue: #2A2A72 — adds contrast and depth
+Warm Orange: #F4A261 — enhances visual engagement
+Cool Teal: #264653 — balances the palette
+💡 Design Principles
+Used red as a primary action color (CTA focus)
+Applied neutral tones for structure and readability
+Maintained visual hierarchy and accessibility
+Ensured consistency across UI components and states
 
 Ключевые правила проекта
 
