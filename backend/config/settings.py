@@ -1,6 +1,8 @@
+from email.policy import default
 from pathlib import Path
 from datetime import timedelta
 import os
+import dj_database_url
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-=fake-secret-key=-do-not-use-in-production'
@@ -23,6 +25,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -52,14 +55,17 @@ TEMPLATES = [
 WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('DB_NAME', 'daniyal_damu'),
-        'USER': os.environ.get('DB_USER', 'postgres'),
-        'PASSWORD': os.environ.get('DB_PASSWORD', 'postgres'),
-        'HOST': os.environ.get('DB_HOST', 'db'),
-        'PORT': os.environ.get('DB_PORT', '5432'),
-    }
+    'default': dj_database_url.config(
+        default='postgresql://postgres:1234@localhost:5432/danyal',
+        conn_max_age=600,)
+#    'default': {
+#        'ENGINE': 'django.db.backends.postgresql',
+#        'NAME': os.environ.get('DB_NAME', 'daniyal_damu'),
+#        'USER': os.environ.get('DB_USER', 'postgres'),
+#        'PASSWORD': os.environ.get('DB_PASSWORD', 'postgres'),
+#        'HOST': os.environ.get('DB_HOST', 'db'),
+#        'PORT': os.environ.get('DB_PORT', '5432'),
+#    }
 }
 
 LANGUAGE_CODE = 'ru-ru'
