@@ -27,7 +27,7 @@ api.interceptors.response.use(
         const refreshToken = localStorage.getItem('refresh');
         if (!refreshToken) throw new Error('No refresh token');
         
-        const res = await axios.post('/api/token/refresh/', {
+        const res = await axios.post('https://danial-damu-frontend.onrender.com/api/token/refresh/', {
           refresh: refreshToken
         });
         
