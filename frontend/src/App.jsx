@@ -7,7 +7,7 @@ import Supermarkets from './modules/info/Supermarkets';
 import Contacts from './modules/info/Contacts';
 import Partners from './modules/info/Partners';
 import Vacancies from './modules/info/Vacancies';
-import AdminLogin from './src/modules/admin/AdminLogin.jsx';
+import AdminLogin from './src/modules/admin/AdminLogin';
 import AdminImages from './src/modules/admin/AdminImages';
 import ProtectedRoute from './shared/layout/ProtectedRoute';
 
