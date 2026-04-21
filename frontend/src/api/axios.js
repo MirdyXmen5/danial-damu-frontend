@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: '/api' // URL to Django backend
+  baseURL: import.meta.env.VITE_API_URL
+// baseURL: '/api' // URL to Django backend
 });
 
 api.interceptors.request.use(
