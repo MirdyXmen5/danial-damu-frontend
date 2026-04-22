@@ -21,14 +21,14 @@ api.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
     // Prevent retry loops
-    if (error.response?.status === 401 && !originalRequest._retry && originalRequest.url !== '/token/') {
+    if (error.response?.status === 401 && !originalRequest._retry && originalRequest.url !== '/api/token/') {
       originalRequest._retry = true;
       try {
         const refreshToken = localStorage.getItem('refresh');
         if (!refreshToken) throw new Error('No refresh token');
         
-        const res = await axios.post('https://danial-damu-frontend.onrender.com/api/token/refresh/', {
-          refresh: refreshToken
+        const res = await api.post('/api/token/refresh/', {
+        refresh: refreshToken
         });
         
         localStorage.setItem('access', res.data.access);
