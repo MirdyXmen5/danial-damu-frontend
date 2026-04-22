@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: danial-damu-frontend
+    runtime: node
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: VITE_API_URL
+        value: https://your-backend-render-url.onrender.com
+        scope: build
+      - key: NODE_VERSION
+        value: 20.12.0

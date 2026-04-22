@@ -1,8 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL
-// baseURL: '/api' // URL to Django backend
+  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:8000'
 });
 
 api.interceptors.request.use(
@@ -40,8 +39,7 @@ api.interceptors.response.use(
         
         // Redirect only if we are in the admin panel
         if (window.location.pathname.includes('/panel')) {
-          const base = window.location.hostname.includes('github.io') ? '/danial-damu-frontend' : '';
-          window.location.href = `${base}/panel/login`;
+          window.location.href = '/panel/login';
         }
         return Promise.reject(err);
       }

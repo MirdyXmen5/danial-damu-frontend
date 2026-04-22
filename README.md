@@ -85,5 +85,46 @@ danial-damu/
 Изначально логотип сайта находился по пути `img/logo.png`. Для корректной работы бандлера Vite (и чтобы он работал как `favicon` в заголовке вкладки браузера), файл **`logo.png` обязательно должен находиться в папке `public`** в корне проекта вместе с файлами языковой локализации.
 
 
-DDD
-__________________________________________________________________
+## 🌍 Развертывание на Render
+
+Для развертывания приложения на облачном хостинге **Render.com** используются специально подготовленные конфиги.
+
+### Быстрый старт развертывания:
+
+1. **Убедитесь, что все изменения загружены в GitHub:**
+   ```bash
+   git add .
+   git commit -m "Prepare for render deployment"
+   git push origin main
+   ```
+
+2. **Развертывание Backend:**
+   - На render.com создайте Web Service
+   - Подключите GitHub репозиторий
+   - Build Command: `pip install -r backend/requirements.txt && python backend/manage.py migrate`
+   - Start Command: `gunicorn config.wsgi:application --bind 0.0.0.0:$PORT`
+   - Установите переменные окружения (DEBUG, SECRET_KEY, ALLOWED_HOSTS, CORS_ALLOWED_ORIGINS)
+
+3. **Развертывание Frontend:**
+   - Создайте второй Web Service (Node)
+   - Build Command: `npm install && npm run build`
+   - Start Command: `npm start`
+   - Установите VITE_API_URL = https://ваш-backend.onrender.com
+
+4. **Обновление CORS в Backend:**
+   - В settings.py добавьте URL вашего frontend в CORS_ALLOWED_ORIGINS
+
+### 📚 Подробные инструкции:
+
+- **[RENDER_DEPLOYMENT.md](./RENDER_DEPLOYMENT.md)** — Полная инструкция по развертыванию
+- **[RENDER_CHECKLIST.md](./RENDER_CHECKLIST.md)** — Чек-лист перед и после развертывания
+- **[BACKEND_RENDER_SETUP.md](./BACKEND_RENDER_SETUP.md)** — Специфика настройки Django для Render
+
+### 🔑 Основные файлы конфигурации:
+
+- `.env.production` — Переменные для production (API URL, etc.)
+- `.env.development` — Переменные для разработки
+- `render.yaml` — Конфигурация для Render
+- `vite.config.js` — Обновлена для production сборки
+
+---

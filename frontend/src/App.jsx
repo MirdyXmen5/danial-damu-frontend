@@ -13,9 +13,10 @@ import ProtectedRoute from './shared/layout/ProtectedRoute';
 
 function App() {
   return (
-    <Router>
-    basename={window.location.hostname.includes('github.io') ? '/danial-damu-frontend/' : '/'} 
-      future={{ v7_startTransition: true, v7_relativeSplatPath: true }} 
+    <Router
+      basename="/"
+      future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
+    >
       <div className="flex flex-col min-h-screen">
         <Header />
         <main className="flex-grow">
