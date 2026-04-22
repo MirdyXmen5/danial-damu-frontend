@@ -56,7 +56,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.config(
-        default='postgresql://postgres:1234@localhost:5432/danyal',
+        default='postgresql://danyal_db_user:n3tieKNWJitrmwh5cPINaqPMtm0f4ceG@dpg-d7jkmf1f9bms73ftsgl0-a/danyal_db',
         conn_max_age=600,)
 #    'default': {
 #        'ENGINE': 'django.db.backends.postgresql',
