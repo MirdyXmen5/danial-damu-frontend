@@ -19,7 +19,7 @@ const AdminImages = () => {
 
   const fetchImages = async () => {
     try {
-      const response = await api.get('/images/');
+      const response = await api.get('api/images/');
       const data = Array.isArray(response.data) ? response.data : response.data.results || [];
       setImages(data);
     } catch (err) {
@@ -51,7 +51,7 @@ const AdminImages = () => {
     formData.append('category', category);
 
     try {
-      await api.post('/images/', formData);
+      await api.post('api/images/', formData);
       setFile(null);
       setTitle('');
       setCategory('promo');
@@ -68,7 +68,7 @@ const AdminImages = () => {
   const handleDelete = async (id) => {
     if (!window.confirm('Вы точно хотите удалить это изображение?')) return;
     try {
-      await api.delete(`/images/${id}/`);
+      await api.delete(`api/images/${id}/`);
       fetchImages();
     } catch (err) {
       console.error('Error deleting image:', err);

@@ -19,15 +19,20 @@ api.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
-    // Prevent retry loops
-    if (error.response?.status === 401 && !originalRequest._retry && originalRequest.url !== '/api/token/') {
+    
+    // Проверяем был ли это запрос на token (чтобы избежать бесконечного цикла)
+    const isTokenRequest = originalRequest?.url?.includes('token/') || originalRequest?._retry;
+    
+    // Только пытаемся обновить token если это 401 и это не запрос на token
+    if (error.response?.status === 401 && !isTokenRequest) {
       originalRequest._retry = true;
       try {
         const refreshToken = localStorage.getItem('refresh');
         if (!refreshToken) throw new Error('No refresh token');
         
-        const res = await api.post('/api/token/refresh/', {
-        refresh: refreshToken
+        // Используем baseURL правильно
+        const res = await api.post('api/token/refresh/', {
+          refresh: refreshToken
         });
         
         localStorage.setItem('access', res.data.access);
@@ -37,7 +42,7 @@ api.interceptors.response.use(
         localStorage.removeItem('access');
         localStorage.removeItem('refresh');
         
-        // Redirect only if we are in the admin panel
+        // Перенаправляем на логин если находимся в админ панели
         if (window.location.pathname.includes('/panel')) {
           window.location.href = '/panel/login';
         }

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../../api/axios';
 
 const AdminLogin = () => {
   const [username, setUsername] = useState('');
@@ -11,7 +11,7 @@ const AdminLogin = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/api/token/', {
+      const response = await api.post('api/token/', {
         username,
         password
       });
@@ -19,7 +19,8 @@ const AdminLogin = () => {
       localStorage.setItem('refresh', response.data.refresh);
       navigate('/panel/images');
     } catch (err) {
-      setError('Неверный логин или пароль');
+      console.error('Login error:', err);
+      setError(err.response?.data?.detail || 'Неверный логин или пароль');
     }
   };
 
