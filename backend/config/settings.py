@@ -1,13 +1,29 @@
-from email.policy import default
 from pathlib import Path
 from datetime import timedelta
 import os
 import dj_database_url
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-SECRET_KEY = 'django-insecure-=fake-secret-key=-do-not-use-in-production'
-DEBUG = True
-ALLOWED_HOSTS = ['*']
+
+
+def get_bool_env(name, default=False):
+    value = os.environ.get(name)
+    if value is None:
+        return default
+    return value.strip().lower() in {'1', 'true', 'yes', 'on'}
+
+
+def get_list_env(name, default=''):
+    value = os.environ.get(name, default)
+    return [item.strip() for item in value.split(',') if item.strip()]
+
+
+SECRET_KEY = os.environ.get(
+    'SECRET_KEY',
+    'django-insecure-=fake-secret-key=-do-not-use-in-production',
+)
+DEBUG = get_bool_env('DEBUG', default=True)
+ALLOWED_HOSTS = get_list_env('ALLOWED_HOSTS', default='localhost,127.0.0.1')
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -56,16 +72,12 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.config(
-        default='postgresql://danyal_db_user:n3tieKNWJitrmwh5cPINaqPMtm0f4ceG@dpg-d7jkmf1f9bms73ftsgl0-a/danyal_db',
-        conn_max_age=600,)
-#    'default': {
-#        'ENGINE': 'django.db.backends.postgresql',
-#        'NAME': os.environ.get('DB_NAME', 'daniyal_damu'),
-#        'USER': os.environ.get('DB_USER', 'postgres'),
-#        'PASSWORD': os.environ.get('DB_PASSWORD', 'postgres'),
-#        'HOST': os.environ.get('DB_HOST', 'db'),
-#        'PORT': os.environ.get('DB_PORT', '5432'),
-#    }
+        default=os.environ.get(
+            'DATABASE_URL',
+            'postgresql://danyal_db_user:n3tieKNWJitrmwh5cPINaqPMtm0f4ceG@dpg-d7jkmf1f9bms73ftsgl0-a/danyal_db',
+        ),
+        conn_max_age=600,
+    )
 }
 
 LANGUAGE_CODE = 'ru-ru'
@@ -80,13 +92,16 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost",
-    "http://localhost:80",
-    "http://localhost:3000",
-    "http://localhost:5173",
-    "http://127.0.0.1:5173",
-]
+CORS_ALLOWED_ORIGINS = get_list_env(
+    'CORS_ALLOWED_ORIGINS',
+    default=(
+        'http://localhost,'
+        'http://localhost:80,'
+        'http://localhost:3000,'
+        'http://localhost:5173,'
+        'http://127.0.0.1:5173'
+    ),
+)
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (

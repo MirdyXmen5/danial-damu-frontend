@@ -35,6 +35,7 @@ function App() {
                 <AdminImages />
               </ProtectedRoute>
             } />
+            <Route path="/admin/*" element={<Navigate to="/panel/login" replace />} />
             <Route path="/panel/*" element={<Navigate to="/panel/login" replace />} />
           </Routes>
         </main>
