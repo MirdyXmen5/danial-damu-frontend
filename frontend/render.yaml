@@ -6,7 +6,7 @@ services:
     startCommand: npm start
     envVars:
       - key: VITE_API_URL
-        value: https://your-backend-render-url.onrender.com
+        value: https://danial-damu-backend.onrender.com
         scope: build
       - key: NODE_VERSION
         value: 20.12.0
