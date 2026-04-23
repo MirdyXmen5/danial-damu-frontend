@@ -14,7 +14,7 @@ import ProtectedRoute from './shared/layout/ProtectedRoute';
 function App() {
   return (
     <Router
-      basename="/"
+      // basename="/"
       future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
     >
       <div className="flex flex-col min-h-screen">
