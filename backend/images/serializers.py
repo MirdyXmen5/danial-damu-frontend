@@ -2,9 +2,17 @@ from rest_framework import serializers
 from .models import ProductImage
 
 class ProductImageSerializer(serializers.ModelSerializer):
+    image = serializers.ImageField(required=True)
+
     class Meta:
         model = ProductImage
         fields = ['id', 'image', 'title', 'category', 'order', 'created_at']
+
+    def to_representation(self, instance):
+        ret = super().to_representation(instance)
+        if instance.image:
+            ret['image'] = instance.image.url
+        return ret
 
     def validate_image(self, value):
         if value.size > 5 * 1024 * 1024:

@@ -7,7 +7,7 @@ services:
       - media_volume:/app/media
       - static_volume:/app/static
     ports:
-      - "8000:8000"
+      - "8001:8000"
     depends_on:
       db:
         condition: service_healthy
@@ -39,12 +39,12 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "80:80"
+      - "8082:80"
     depends_on:
       - backend
     restart: unless-stopped
     volumes:
-      - media_volume:/usr/share/nginx/html/media
+      - media_volume:/usr/share/nginx/html/media/
       - static_volume:/usr/share/nginx/html/static
 
 volumes:

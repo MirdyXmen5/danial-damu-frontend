@@ -41,6 +41,10 @@ const AdminImages = () => {
   const handleUpload = async (e) => {
     e.preventDefault();
     if (!file) return;
+    if (file.size > 5 * 1024 * 1024) {
+      setError('Файл слишком большой. Выберите изображение размером до 5 МБ.');
+      return;
+    }
 
     setLoading(true);
     setError('');
@@ -57,7 +61,13 @@ const AdminImages = () => {
       setCategory('promo');
       fetchImages();
     } catch (err) {
-      const msg = err.response?.data?.detail || err.response?.data?.image?.[0] || 'Ошибка загрузки файла. Убедитесь, что размер менее 5МБ и формат корректен.';
+      const status = err.response?.status;
+      const msg =
+        status === 413
+          ? 'Сервер отклонил файл из-за размера запроса. Перезапустите контейнеры после обновления конфигурации и попробуйте снова.'
+          : status === 401 || status === 403
+            ? err.response?.data?.detail || 'Сессия авторизации недействительна. Войдите в админ-панель заново.'
+            : err.response?.data?.image?.[0] || err.response?.data?.detail || 'Ошибка загрузки файла. Убедитесь, что размер менее 5 МБ и формат корректен.';
       setError(msg);
       console.error(err);
     } finally {
