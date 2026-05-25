@@ -5,11 +5,11 @@ import Home from './modules/home/Home';
 import About from './modules/info/About';
 import Supermarkets from './modules/info/Supermarkets';
 import Contacts from './modules/info/Contacts';
-import Partners from './modules/info/Partners';
 import Vacancies from './modules/info/Vacancies';
 import AdminLogin from './modules/admin/AdminLogin';
 import AdminImages from './modules/admin/AdminImages';
 import ProtectedRoute from './shared/layout/ProtectedRoute';
+import AnimatedBackground from './shared/layout/AnimatedBackground';
 
 function App() {
   return (
@@ -17,15 +17,15 @@ function App() {
       basename={window.location.hostname.includes('github.io') ? '/danial-damu-frontend/' : '/'} 
       future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
     >
-      <div className="flex flex-col min-h-screen">
+      <div className="flex flex-col min-h-screen relative">
+        <AnimatedBackground />
         <Header />
-        <main className="flex-grow">
+        <main className="flex-grow relative z-10">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/supermarkets" element={<Supermarkets />} />
             <Route path="/contacts" element={<Contacts />} />
-            <Route path="/partners" element={<Partners />} />
             <Route path="/vacancies" element={<Vacancies />} />
             
             {/* Admin Routes */}

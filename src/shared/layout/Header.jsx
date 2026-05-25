@@ -17,7 +17,6 @@ const Header = () => {
     { key: 'about', path: '/about' },
     { key: 'supermarkets', path: '/supermarkets' },
     { key: 'contacts', path: '/contacts' },
-    { key: 'partners', path: '/partners' },
     { key: 'vacancies', path: '/vacancies' },
   ];
 

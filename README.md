@@ -1,89 +1,378 @@
-# DANIYAL DAMU — Корпоративный Frontend
+# DANIYAL DAMU — Корпоративный сайт
 
-Современный фронтенд для веб-корпоративного сайта крупнейшей сети супермаркетов **«DANIYAL DAMU»**. Разработано с фокусом на UX/UI, кроссплатформенную адаптивность и строгую компонентную архитектуру.
+Полнофункциональное веб-приложение для крупнейшей сети супермаркетов **«DANIYAL DAMU»**. Современный стек React + Django с Docker, оптимизированный для высокой производительности, мультиязычности и кроссплатформенной адаптивности.
 
 ## 🚀 Технологический стек
 
+### Frontend (React)
 -   **React 18** — Functional Components & Hooks
--   **Vite** — Быстрая сборка и HMR в режиме разработки
--   **Tailwind CSS** — Мощная система стилизации с кастомными бренда-цветами
--   **Framer Motion** — Плавные микро- и макро-анимации компонентов (карусели, карточки, бургер-меню)
+-   **Vite** — Ультрабыстрая сборка и HMR
+-   **Tailwind CSS** — Система стилизации с кастомными бренд-цветами
+-   **Framer Motion** — Плавные анимации и микровзаимодействия
 -   **React Router v6** — Клиентская маршрутизация
--   **i18next + react-i18next** — Полная мультиязычность для казахского (`kk` - по умолчанию) и русского (`ru`) языков
--   **Axios** — HTTP-клиент с настроенным инстансом для взаимодействия к бэкенду
--   **Lucide React** — Иконки в едином стиле
+-   **i18next + react-i18next** — Полная мультиязычность (казахский, русский)
+-   **Axios** — HTTP-клиент с интерцепторами
+-   **Lucide React** — SVG иконки
+
+### Backend (Django)
+-   **Django 5.x** — REST API фреймворк
+-   **Django REST Framework** — Сериализация и API endpoints
+-   **SQLite/PostgreSQL** — База данных
+-   **Python 3.12+** — Язык программирования
+
+### DevOps & Infrastructure
+-   **Docker & Docker Compose** — Контейнеризация
+-   **Nginx** — Веб-сервер и reverse proxy
+-   **Linux** — ОС для production
 
 ---
 
 ## 📂 Архитектура и структура проекта
 
-Проект четко разделяет переиспользуемые UI/UX компоненты, конфигурации сборки и локализацию:
-
 ```
-danial-damu/
-├── public/                 # Статические ресурсы (игнорируются бандлером Vite)
-│   ├── logo.png            # Логотип сайта и favicon
-│   └── locales/            # Файлы локализации (.json)
-│       ├── kk/common.json
-│       └── ru/common.json
-├── src/
-│   ├── api/                # Инстанс Axios и настройки API-запросов
-│   ├── components/         # Многоразовые UI компоненты
-│   │   ├── home/           # Слайдеры, карточки преимуществ и слайдер акций
-│   │   └── layout/         # Header, Footer и навигация сайта
-│   ├── pages/              # Главные страницы (Home, About, Contacts, Vacancies и т.д.)
-│   ├── App.jsx             # Точка входа в React Router
-│   ├── main.jsx            # Инициализация React DOM
-│   ├── i18n.js             # Конфигурация i18next
-│   └── index.css           # Глобальные стили + Tailwind директивы
-├── tailwind.config.js      # Брендовые цвета `brand.*` и расширение Tailwind
-├── vite.config.js          # Конфигурация сборщика
-└── package.json            # Зависимости и скрипты
+danial-damu-frontend/
+├── 📁 backend/                 # Django REST API
+│   ├── config/                 # Настройки Django проекта
+│   │   ├── settings.py
+│   │   ├── urls.py
+│   │   └── wsgi.py
+│   ├── images/                 # Приложение для управления изображениями
+│   │   ├── models.py
+│   │   ├── serializers.py
+│   │   ├── views.py
+│   │   ├── urls.py
+│   │   └── migrations/
+│   ├── manage.py
+│   ├── requirements.txt        # Python зависимости
+│   ├── Dockerfile
+│   └── entrypoint.sh
+│
+├── 📁 nginx/                   # Конфигурация Nginx
+│   └── default.conf
+│
+├── 📁 src/                     # React фронтенд
+│   ├── api/
+│   │   └── axios.js            # Настройки HTTP клиента
+│   ├── locales/                # Файлы локализации
+│   │   ├── kk/common.json      # Казахский
+│   │   └── ru/common.json      # Русский
+│   ├── modules/                # Модули страниц
+│   │   ├── admin/
+│   │   │   ├── AdminLogin.jsx
+│   │   │   └── AdminImages.jsx
+│   │   ├── home/
+│   │   │   ├── Home.jsx
+│   │   │   ├── HeroSlider.jsx
+│   │   │   ├── Advantages.jsx
+│   │   │   └── Promotions.jsx
+│   │   └── info/
+│   │       ├── About.jsx
+│   │       ├── Contacts.jsx
+│   │       ├── Partners.jsx
+│   │       ├── Supermarkets.jsx
+│   │       └── Vacancies.jsx
+│   ├── shared/                 # Переиспользуемые компоненты
+│   │   └── layout/
+│   │       ├── Header.jsx
+│   │       ├── Footer.jsx
+│   │       └── ProtectedRoute.jsx
+│   ├── App.jsx                 # Главный компонент с React Router
+│   ├── i18n.js                 # Конфигурация i18next
+│   ├── main.jsx                # Точка входа React
+│   └── index.css               # Глобальные стили + Tailwind
+│
+├── 📁 public/                  # Статические ресурсы
+│   └── logo.png                # Логотип и favicon
+│
+├── docker-compose.yml          # Оркестрация контейнеров
+├── Dockerfile                  # Сборка фронтенд контейнера
+├── vite.config.js              # Конфигурация Vite
+├── tailwind.config.js          # Tailwind CSS расширение
+├── postcss.config.js           # PostCSS конфигурация
+├── package.json                # Node.js зависимости
+├── index.html                  # HTML шаблон
+└── README.md
 ```
 
 ---
 
-## ⚡ Особенности реализации
+## ⚡ Ключевые особенности
 
-### 🌐 Мультиязычность
-Никакого захардкоженного текста в коде проекта нет. Весь текстовый контент берется из `.json` файлов через функцию-хук `useTranslation()` из пакета `react-i18next`. По умолчанию используется казахский язык.
+### 🌐 Полная мультиязычность
+Весь текстовый контент загружается из JSON файлов через `react-i18next`. Поддержка казахского (по умолчанию) и русского языков. Нет захардкоженного текста в коде.
 
-### 💨 Производительность и Анимации
-Изображения, карусель акций и hero-баннеры используют адаптивные слайдеры, собранные вручную через **Framer Motion + CSS Transforms**, что гарантирует плавные `60 FPS` анимации. На мобильных устройствах карусели автоматически меняют количество элементов, подстраиваясь под экран, с авто-прокруткой.
+### 🎨 Адаптивный дизайн
+Полная кроссплатформенность: от мобильных устройств до десктопов. Карусели и слайдеры адаптируются под размер экрана с авто-прокруткой.
 
-### 🦺 Обработка данных (API)
-В `src/api/axios.js` реализован паттерн интерцепторов для запросов к бэкенду.  Для загружаемых модулей (как HeroSlider и Promotions) вмонтированы `Skeleton Loaders` (анимации-заглушки загрузки).
+### 🚀 Производительность
+- Использование **Vite** для молниеносной разработки и оптимальной сборки
+- **Framer Motion** для 60 FPS анимаций
+- **Lazy loading** компонентов с React Router
+- **Skeleton Loaders** для лучшего UX при загрузке данных
+
+### 🔐 Защищённые маршруты
+`ProtectedRoute` компонент предотвращает доступ неавторизованных пользователей к админ-панели.
+
+### 🔄 API интеграция
+Единая конфигурация Axios с интерцепторами для:
+- Автоматического добавления токенов авторизации
+- Обработки ошибок
+- Retry логики
 
 ---
 
 ## 🛠️ Запуск проекта
 
-Убедитесь, что у вас установлен [Node.js](https://nodejs.org/) для frontend и [Python 3.12+](https://www.python.org/) для backend.
+Требования:
+- **Node.js 18+** для фронтенда
+- **Python 3.12+** для бэкенда
+- **Docker & Docker Compose** для контейнеризации
 
-### 🔌 Запуск всего проекта через Docker (Быстрый старт)
+### ⚡ Быстрый старт (Docker Compose)
 
-Самый рекомендуемый и простой способ запустить проект для продакшена или локального тестирования:
+Самый простой способ запустить всё приложение:
 
-1. Убедитесь, что у вас установлен **Docker** и **Docker Compose**.
-2. В корневой директории проекта просто выполните:
-   ```bash
-   docker compose up --build -d
-   ```
-3. Готово! Фронтенд (React) теперь доступен по адресу: `http://localhost/` (Порт 80)
-4. Бэкенд и админка (Django) проксируются автоматически (`/api` и `/admin`).
-5. Чтобы создать администратора, подключитесь к работающему контейнеру бэкенда:
-   ```bash
-   docker compose exec backend python manage.py createsuperuser
-   ```
+```bash
+docker compose up --build -d
+```
 
-*Альтернативный (ручной) способ запуска:*
-Для разработки вы все еще можете использовать `npm run dev` для React и `python manage.py runserver` для Django, предварительно установив зависимости.
+Приложение будет доступно:
+- 🌐 Фронтенд: [http://localhost/](http://localhost/)
+- 🔌 API: [http://localhost/api/](http://localhost/api/)
+- 👨‍💼 Админка Django: [http://localhost/admin/](http://localhost/admin/)
+
+#### Создание администратора (в Docker):
+```bash
+docker compose exec backend python manage.py createsuperuser
+```
+
+### 📦 Локальная разработка (без Docker)
+
+#### Фронтенд (React):
+```bash
+# Установка зависимостей
+npm install
+
+# Разработка с HMR
+npm run dev
+
+# Production сборка
+npm run build
+```
+
+Фронтенд откроется на `http://localhost:5173`
+
+#### Бэкенд (Django):
+```bash
+cd backend
+
+# Создание виртуального окружения
+python -m venv venv
+source venv/bin/activate  # На Windows: venv\Scripts\activate
+
+# Установка зависимостей
+pip install -r requirements.txt
+
+# Миграции БД
+python manage.py migrate
+
+# Создание администратора
+python manage.py createsuperuser
+
+# Запуск сервера
+python manage.py runserver
+```
+
+Бэкенд будет доступен на `http://localhost:8000`
 
 ---
 
-## 📌 Важное замечание по ассетам
-Изначально логотип сайта находился по пути `img/logo.png`. Для корректной работы бандлера Vite (и чтобы он работал как `favicon` в заголовке вкладки браузера), файл **`logo.png` обязательно должен находиться в папке `public`** в корне проекта вместе с файлами языковой локализации.
+## � Переменные окружения
 
+### Frontend (`.env` в корне)
+```env
+VITE_API_BASE_URL=http://localhost:8000
+VITE_APP_TITLE=DANIYAL DAMU
+```
 
-DDD
-__________________________________________________________________
+### Backend (`.env` в `backend/`)
+```env
+DEBUG=False
+SECRET_KEY=your-secret-key-here
+ALLOWED_HOSTS=localhost,127.0.0.1
+DATABASE_URL=sqlite:///db.sqlite3
+```
+
+---
+
+## 📋 Доступные npm скрипты
+
+```bash
+npm run dev          # Запуск dev сервера с HMR
+npm run build        # Production сборка
+npm run preview      # Предпросмотр production сборки
+npm run lint         # Проверка синтаксиса (если настроен ESLint)
+```
+
+---
+
+## 🐳 Docker структура
+
+- **Frontend контейнер** — Nginx + SPA из Vite
+- **Backend контейнер** — Gunicorn + Django
+- **Nginx контейнер** — Reverse proxy для всех сервисов
+
+Проксирование:
+- `/` → Frontend (React SPA)
+- `/api/*` → Backend Django API
+- `/admin/*` → Django админка
+- `/static/*` → Статические файлы Django
+
+---
+
+## 🎯 Разработка
+
+### Добавление нового модуля страницы
+
+1. Создайте папку в `src/modules/имя-модуля/`
+2. Добавьте компоненты React
+3. Зарегистрируйте маршрут в `src/App.jsx`
+4. Добавьте переводы в `src/locales/kk/common.json` и `src/locales/ru/common.json`
+
+### Добавление нового языка
+
+1. Создайте папку `src/locales/код-языка/` (например, `en/`)
+2. Создайте файл `common.json` с переводами
+3. Обновите конфигурацию в `src/i18n.js`
+
+### Django API разработка
+
+1. Создайте новое приложение: `python manage.py startapp app_name`
+2. Определите модели в `models.py`
+3. Создайте сериализаторы в `serializers.py`
+4. Добавьте представления (ViewSets) в `views.py`
+5. Зарегистрируйте URL в `urls.py`
+6. Создайте миграции: `python manage.py makemigrations && python manage.py migrate`
+
+---
+
+## 📝 Логирование и отладка
+
+- Frontend ошибки видны в `DevTools Console`
+- Backend логи: `docker compose logs backend`
+- Nginx логи: `docker compose logs nginx`
+Технологии
+### Django Debug Toolbar (локальная разработка)
+Добавьте в `settings.py`:
+```python
+INSTALLED_APPS += ['debug_toolbar']
+MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware']
+INTERNAL_IPS = ['127.0.0.1']
+```
+
+---
+
+## 🚀 Развертывание
+
+### Production с Docker Compose
+
+```bash
+docker compose -f docker-compose.yml up -d
+```
+
+### Масштабирование
+
+Отредактируйте `docker-compose.yml` для добавления нескольких инстансов:
+```yaml
+services:
+  backend:
+    deploy:
+      replicas: 3
+```
+
+### Backup БД
+
+```bash
+docker compose exec backend python manage.py dumpdata > backup.json
+```
+
+---
+
+## 🤝 Взаимодействие Frontend ↔ Backend
+
+### API запросы
+
+Используйте готовый Axios инстанс:
+```javascript
+import api from '@/api/axios';
+
+// GET
+api.get('/api/images/').then(res => console.log(res.data));
+
+// POST
+api.post('/api/images/', { name: 'shop', image: file });
+
+// PUT/PATCH
+api.patch('/api/images/1/', { name: 'updated-shop' });
+
+// DELETE
+api.delete('/api/images/1/');
+```
+
+### Аутентификация
+
+Токены сохраняются в `localStorage` и добавляются в заголовок `Authorization: Bearer <token>`.
+
+---
+
+## 📊 Структура компонентов
+
+### Страницы (modules)
+Находятся в `src/modules/` и представляют собой полные страницы приложения.
+
+### Компоненты (shared)
+Переиспользуемые компоненты в `src/shared/` — Header, Footer, ProtectedRoute и т.д.
+
+### API слой
+Все запросы идут через `src/api/axios.js` с централизованной обработкой ошибок.
+
+---
+
+## 🐛 Известные проблемы и решения
+
+### Проблема: CORS ошибки
+**Решение:** Убедитесь, что в `settings.py` Django указаны правильные `ALLOWED_HOSTS` и `CORS_ALLOWED_ORIGINS`.
+
+### Проблема: Изображения не загружаются
+**Решение:** Проверьте, что путь к логотипу — `public/logo.png` и адрес API в `.env` правилен.
+
+### Проблема: HMR не работает в Docker
+**Решение:** Добавьте в `vite.config.js`:
+```javascript
+server: {
+  middlewareMode: true,
+  watch: { usePolling: true }
+}
+```
+
+---
+
+## 📄 Лицензия
+
+Все права на визуальный дизайн и концепцию принадлежат **ТОО "DANIYAL DAMU"**.
+
+---
+
+## 👥 Команда
+
+- **Frontend Lead**: React, Vite, Tailwind CSS, i18n
+- **Backend Lead**: Django, REST API, БД
+- **DevOps**: Docker, Nginx, CI/CD
+
+---
+
+## 📞 Контакты и поддержка
+
+Для вопросов и найденных ошибок создавайте issues в репозитории.
+
+**Последнее обновление:** Май 2026

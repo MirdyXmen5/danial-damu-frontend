@@ -20,6 +20,17 @@ export default {
       },
       fontFamily: {
         sans: ['Inter', 'Roboto', 'sans-serif'],
+      },
+      keyframes: {
+        'animationbg-6': {
+          '0%': { transform: 'translateX(-25%)' },
+          '100%': { transform: 'translateX(25%)' }
+        }
+      },
+      animation: {
+        'bg-anim-1': 'animationbg-6 3s ease-in-out infinite alternate',
+        'bg-anim-2': 'animationbg-6 4s ease-in-out infinite alternate-reverse',
+        'bg-anim-3': 'animationbg-6 5s ease-in-out infinite alternate',
       }
     },
   },
