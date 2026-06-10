@@ -27,12 +27,6 @@ SHOPS = [
         'address': '​Улица Домалак ана, 412',
     },
     {
-        'name': 'Danyal-Damu 5',
-        'latitude': 42.914003,
-        'longitude': 71.466675,
-        'address': '​Улица Барысхан, 85',
-    },
-        {
         'name': 'Danyal-Damu 6',
         'latitude': 42.93544,
         'longitude': 71.349919,
