@@ -12,25 +12,31 @@ SHOPS = [
         'name': 'Danyal-Damu 2',
         'latitude': 42.915106,
         'longitude': 71.415278,
-        'address': 'ул. Мамбет батыра 6, Taraz',
+        'address': 'ул. Мамбет батыра 6',
     },
     {
         'name': 'Danyal-Damu 3',
-        'latitude': 42.881538,
-        'longitude': 71.316805,
-        'address': '​Улица Домалак ана, 412',
-    },
-    {
-        'name': 'Danyal-Damu 4',
         'latitude': 42.922091,
         'longitude': 71.373494,
         'address': '​Переулок Аль-Фараби, 56',
+    },
+    {
+        'name': 'Danyal-Damu 4',
+        'latitude': 42.881538,
+        'longitude': 71.316805,
+        'address': '​Улица Домалак ана, 412',
     },
     {
         'name': 'Danyal-Damu 5',
         'latitude': 42.914003,
         'longitude': 71.466675,
         'address': '​Улица Барысхан, 85',
+    },
+        {
+        'name': 'Danyal-Damu 6',
+        'latitude': 42.93544,
+        'longitude': 71.349919,
+        'address': 'р-н Әулиеата,мкр.Улы Дала,ст-е 111',
     },
 ]
 

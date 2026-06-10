@@ -70,12 +70,12 @@ const Supermarkets = () => {
       </div>
 
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
-        <div className="min-h-[420px] overflow-hidden rounded-lg border border-black/10 shadow-sm">
+        <div className="h-[420px] md:h-[520px] overflow-hidden rounded-lg border border-black/10 shadow-sm">
           <MapContainer
             center={mapCenter}
             zoom={MAP_ZOOM}
             scrollWheelZoom={false}
-            className="h-[420px] w-full md:h-[520px]"
+            className="h-full w-full"
           >
             <TileLayer
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
