@@ -1,2 +1,16 @@
 node_modules/
 .cache/
+
+# Мастер-пароль vault — ГЛАВНОЕ
+.vault_pass
+vault_pass*
+*.vault_pass
+vault.yml
+
+
+# Мусор Ansible
+*.retry
+*.log
+
+# IP/структуру серверов
+inventory.ini

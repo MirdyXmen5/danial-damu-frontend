@@ -1,0 +1,85 @@
+# ============================================================
+# Базовая настройка VPS: обновление, ufw, пользователь, SSH
+# Запуск: ansible-playbook -i inventory.ini setup.yml -k
+# ============================================================
+
+- hosts: ddvps
+  become: yes
+  vars:
+    new_user: deploy                       # имя нового пользователя
+    ssh_port: 22                           # твой SSH-порт
+    # Публичный ключ берётся с твоей машины (WSL) автоматически:
+    ssh_public_key: "{{ lookup('file', '~/.ssh/id_ed25519.pub') }}"
+
+  tasks:
+    # ---------- 1. Обновление системы ----------
+    - name: Обновить кэш apt и апгрейдить пакеты
+      ansible.builtin.apt:
+        update_cache: yes
+        upgrade: dist
+
+    # ---------- 2. Файрвол ufw ----------
+    - name: Установить ufw
+      ansible.builtin.apt:
+        name: ufw
+        state: present
+
+    - name: Разрешить SSH в файрволе
+      community.general.ufw:
+        rule: allow
+        port: "{{ ssh_port }}"
+        proto: tcp
+
+    - name: Разрешить HTTP и HTTPS (на будущее, для веб-сервера)
+      community.general.ufw:
+        rule: allow
+        port: "{{ item }}"
+        proto: tcp
+      loop:
+        - "80"
+        - "443"
+
+    - name: Включить ufw
+      community.general.ufw:
+        state: enabled
+        policy: deny
+        direction: incoming
+
+    # ---------- 3. Новый пользователь ----------
+    - name: Создать пользователя {{ new_user }}
+      ansible.builtin.user:
+        name: "{{ new_user }}"
+        shell: /bin/bash
+        create_home: yes
+        groups: sudo
+        append: yes
+
+    - name: Дать {{ new_user }} sudo без пароля
+      ansible.builtin.copy:
+        content: "{{ new_user }} ALL=(ALL) NOPASSWD:ALL"
+        dest: "/etc/sudoers.d/{{ new_user }}"
+        mode: "0440"
+        validate: "visudo -cf %s"
+
+    - name: Добавить SSH-ключ пользователю {{ new_user }}
+      ansible.posix.authorized_key:
+        user: "{{ new_user }}"
+        state: present
+        key: "{{ ssh_public_key }}"
+
+    # ---------- 4. Укрепление SSH ----------
+    - name: Отключить вход по паролю и root-логин
+      ansible.builtin.copy:
+        dest: /etc/ssh/sshd_config.d/99-hardening.conf
+        content: |
+          PermitRootLogin no
+          PasswordAuthentication no
+          PubkeyAuthentication yes
+        mode: "0644"
+      notify: Restart ssh
+
+  handlers:
+    - name: Restart ssh
+      ansible.builtin.service:
+        name: ssh
+        state: restarted
