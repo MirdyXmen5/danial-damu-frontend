@@ -6,7 +6,7 @@
 - hosts: ddvps
   become: yes
   vars:
-    new_user: deploy                       # имя нового пользователя
+    new_user: deploy                     # имя нового пользователя
     ssh_port: 22                           # твой SSH-порт
     # Публичный ключ берётся с твоей машины (WSL) автоматически:
     ssh_public_key: "{{ lookup('file', '~/.ssh/id_ed25519.pub') }}"
