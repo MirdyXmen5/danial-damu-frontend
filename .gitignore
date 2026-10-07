@@ -2,9 +2,10 @@ node_modules/
 .cache/
 
 # Environments
-.venv/
+backend/.venv/
 venv/
 env/
+
 
 # Python cache
 __pycache__/
