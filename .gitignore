@@ -3,7 +3,8 @@ node_modules/
 
 # Environments
 backend/.venv/
-venv/
+.venv/
+.venv
 env/
 
 
